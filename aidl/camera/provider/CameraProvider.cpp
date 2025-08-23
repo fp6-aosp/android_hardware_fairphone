@@ -32,7 +32,6 @@ namespace {
 // "device@<version>/internal/<id>"
 const std::regex kDeviceNameRE("device@([0-9]+\\.[0-9]+)/internal/(.+)");
 const int kMaxCameraDeviceNameLen = 128;
-const int kMaxCameraIdLen = 16;
 
 bool matchDeviceName(const std::string& deviceName, std::string* deviceVersion,
                      std::string* cameraId) {
@@ -53,9 +52,7 @@ bool matchDeviceName(const std::string& deviceName, std::string* deviceVersion,
 }  // anonymous namespace
 
 void CameraProvider::addDeviceNames(int camera_id, CameraDeviceStatus status, bool cam_new) {
-    char cameraId[kMaxCameraIdLen];
-    snprintf(cameraId, sizeof(cameraId), "%d", camera_id);
-    std::string cameraIdStr(cameraId);
+    std::string cameraIdStr = std::to_string(camera_id);
 
     mCameraIds.add(cameraIdStr);
 
@@ -92,9 +89,7 @@ void CameraProvider::sCameraDeviceStatusChange(const struct camera_module_callba
     }
 
     Mutex::Autolock _l(cp->mCbLock);
-    char cameraId[kMaxCameraIdLen];
-    snprintf(cameraId, sizeof(cameraId), "%d", camera_id);
-    std::string cameraIdStr(cameraId);
+    std::string cameraIdStr = std::to_string(camera_id);
     cp->mCameraStatusMap[cameraIdStr] = (camera_device_status_t)new_status;
 
     if (cp->mCallbacks == nullptr) {
@@ -205,9 +200,7 @@ bool CameraProvider::initialize() {
             return true;
         }
 
-        char cameraId[kMaxCameraIdLen];
-        snprintf(cameraId, sizeof(cameraId), "%d", i);
-        std::string cameraIdStr(cameraId);
+        std::string cameraIdStr = std::to_string(i);
         mCameraStatusMap[cameraIdStr] = CAMERA_DEVICE_STATUS_PRESENT;
 
         addDeviceNames(i);
