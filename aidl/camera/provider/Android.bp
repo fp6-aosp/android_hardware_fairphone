@@ -15,8 +15,8 @@ cc_defaults {
     ],
     shared_libs: [
         "android.hardware.camera.common-V1-ndk",
-        "android.hardware.camera.device-V1-ndk",
-        "android.hardware.camera.provider-V1-ndk",
+        "android.hardware.camera.device-V2-ndk",
+        "android.hardware.camera.provider-V2-ndk",
         "camera.device-impl.fairphone",
         "libbinder_ndk",
         "libcamera_metadata",
