@@ -1083,6 +1083,57 @@ typedef struct camera_module {
     int (*set_torch_mode)(const char* camera_id, bool enabled);
 
     /**
+     * turn_on_torch_with_strength_level:
+     *
+     * Change the brightness level of the flash unit associated with this camera device
+     * and set it to value in torchStrength. This function also turns ON the torch
+     * with specified torchStrength if the torch is OFF.
+     *
+     * The torchStrength value must be within the valid range i.e. >=1 and
+     * <= FLASH_INFO_STRENGTH_MAXIMUM_LEVEL. Whenever the torch is turned OFF,
+     * the brightness level will reset to FLASH_INFO_STRENGTH_DEFAULT_LEVEL.
+     * When the client calls setTorchMode(ON) after turnOnTorchWithStrengthLevel(N),
+     * the flash unit will have brightness level equal to N. This level does not
+     * represent the real brightness units. It is linear in nature i.e. flashlight
+     * at level 10 is twice as bright as at level 5.
+     *
+     * Return values:
+     *
+     * 0:           On a successful operation.
+     *
+     * -ENOSYS:     The camera device does not support this operation. It is
+     *              returned if and only if android.flash.info.available is
+     *              false.
+     *
+     * -EBUSY:      The camera device is already in use.
+     *
+     * -EINVAL:     camera_id or torchStrength is invalid.
+     *
+     */
+    int (*turn_on_torch_with_strength_level)(const char* camera_id, int32_t torchStrength);
+
+    /**
+     * get_torch_strength_level:
+     *
+     * Get current torch strength level.
+     * If the device supports torch strength control, when the torch is OFF the
+     * strength level will reset to default level, so the return
+     * value in this case will be equal to FLASH_INFO_STRENGTH_DEFAULT_LEVEL.
+     *
+     * Return values:
+     *
+     * 0:           On a successful operation.
+     *
+     * -ENOSYS:     The camera device does not support this operation. It is
+     *              returned if and only if android.flash.info.available is
+     *              false.
+     *
+     * -EINVAL:     camera_id is invalid.
+     *
+     */
+    int (*get_torch_strength_level)(const char* camera_id, int32_t* strengthLevel);
+
+    /**
      * init:
      *
      * This method is called by the camera service before any other methods
