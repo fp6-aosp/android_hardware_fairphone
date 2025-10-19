@@ -20,9 +20,11 @@
 
 #include "convert.h"
 
+#include <aidl/android/hardware/common/NativeHandle.h>
 #include <aidl/android/hardware/graphics/common/BufferUsage.h>
 #include <aidl/android/hardware/graphics/common/Dataspace.h>
 #include <aidl/android/hardware/graphics/common/PixelFormat.h>
+#include <aidlcommonsupport/NativeHandle.h>
 #include <hardware/camera_common.h>
 
 namespace android {
@@ -34,6 +36,7 @@ namespace implementation {
 using ::aidl::android::hardware::camera::device::ErrorCode;
 using ::aidl::android::hardware::camera::device::ErrorMsg;
 using ::aidl::android::hardware::camera::device::ShutterMsg;
+using ::aidl::android::hardware::common::NativeHandle;
 using ::aidl::android::hardware::graphics::common::BufferUsage;
 using ::aidl::android::hardware::graphics::common::Dataspace;
 using ::aidl::android::hardware::graphics::common::PixelFormat;
@@ -141,6 +144,20 @@ void convertToAidl(const camera3_notify_msg* src, NotifyMsg* dst) {
             ALOGE("%s: HIDL type converion failed. Unknown msg type 0x%x", __FUNCTION__, src->type);
     }
     return;
+}
+
+native_handle_t* convertFromAidl(const NativeHandle& src) {
+    return ((src.fds.size() == 0) && (src.ints.size() == 0)) ? nullptr : ::android::makeFromAidl(src);
+}
+
+::ndk::ScopedAStatus convertToScopedAStatus(Status status) {
+    if (status == Status::OK) {
+        return ndk::ScopedAStatus::ok();
+    }
+
+    return ndk::ScopedAStatus::fromServiceSpecificErrorWithMessage(
+        static_cast<int32_t>(status),
+        ::aidl::android::hardware::camera::common::toString(status).c_str());
 }
 
 }  // namespace implementation

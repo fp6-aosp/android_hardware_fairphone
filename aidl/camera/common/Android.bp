@@ -1,0 +1,39 @@
+//
+// Copyright (C) 2025 The LineageOS Project
+//
+// SPDX-License-Identifier: Apache-2.0
+//
+
+cc_library_static {
+    name: "android.hardware.camera.common-helper.fairphone",
+    defaults: ["hidl_defaults"],
+    vendor_available: true,
+    srcs: [
+        "CameraModule.cpp",
+        "CameraMetadata.cpp",
+        "CameraParameters.cpp",
+        "VendorTagDescriptor.cpp",
+        "HandleImporter.cpp",
+        "Exif.cpp",
+        "SimpleThread.cpp",
+    ],
+    cflags: [
+        "-Werror",
+        "-Wextra",
+        "-Wall",
+    ],
+    shared_libs: [
+        "liblog",
+        "libgralloctypes",
+        "libhardware",
+        "libcamera_metadata",
+        "libexif",
+        "libui",
+    ],
+    include_dirs: ["system/media/private/camera/include"],
+    header_libs: ["libhardware_headers.camera3_fairphone"],
+    export_include_dirs: [
+        "include",
+    ],
+    export_shared_lib_headers: ["libui"],
+}
