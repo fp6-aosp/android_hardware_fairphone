@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include <hardware/camera3.h>
+
 #include <CameraModule.h>
 #include <VendorTagDescriptor.h>
 #include <aidl/android/hardware/camera/device/ICameraDevice.h>
