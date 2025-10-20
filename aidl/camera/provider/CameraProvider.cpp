@@ -143,7 +143,7 @@ void CameraProvider::sTorchModeStatusChange(const struct camera_module_callbacks
 }
 
 std::string CameraProvider::getAidlDeviceName(std::string cameraId) {
-    return "device@" + CameraDevice::kDeviceVersion + "/internal/" + cameraId;
+    return "device@1.1/internal/" + cameraId;
 }
 
 CameraProvider::CameraProvider()

@@ -17,8 +17,6 @@ namespace camera {
 namespace device {
 namespace implementation {
 
-std::string CameraDevice::kDeviceVersion = "1.1";
-
 CameraDevice::CameraDevice(
         sp<CameraModule> module, const std::string& cameraId,
         const SortedVector<std::pair<std::string, std::string>>& cameraDeviceNames)
