@@ -161,11 +161,11 @@ bool CameraProvider::initialize() {
         return true;
     }
 
-    mModule = new CameraModule(rawModule);
+    mModule = std::make_shared<CameraModule>(rawModule);
     err = mModule->init();
     if (err != OK) {
         ALOGE("Could not initialize camera HAL module: %d (%s)", err, strerror(-err));
-        mModule.clear();
+        mModule.reset();
         return true;
     }
     ALOGI("Loaded \"%s\" camera module", mModule->getModuleName());
@@ -180,7 +180,7 @@ bool CameraProvider::initialize() {
     err = mModule->setCallbacks(this);
     if (err != OK) {
         ALOGE("Could not set camera module callback: %d (%s)", err, strerror(-err));
-        mModule.clear();
+        mModule.reset();
         return true;
     }
 
@@ -190,13 +190,13 @@ bool CameraProvider::initialize() {
         auto rc = mModule->getCameraInfo(i, &info);
         if (rc != NO_ERROR) {
             ALOGE("%s: Camera info query failed!", __func__);
-            mModule.clear();
+            mModule.reset();
             return true;
         }
 
         if (checkCameraVersion(i, info) != OK) {
             ALOGE("%s: Camera version check failed!", __func__);
-            mModule.clear();
+            mModule.reset();
             return true;
         }
 

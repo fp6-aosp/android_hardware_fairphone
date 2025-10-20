@@ -18,7 +18,7 @@ namespace device {
 namespace implementation {
 
 CameraDevice::CameraDevice(
-        sp<CameraModule> module, const std::string& cameraId,
+        std::shared_ptr<CameraModule> module, const std::string& cameraId,
         const SortedVector<std::pair<std::string, std::string>>& cameraDeviceNames)
     : mModule(module),
       mCameraId(cameraId),

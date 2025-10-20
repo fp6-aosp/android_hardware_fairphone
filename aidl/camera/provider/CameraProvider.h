@@ -55,7 +55,7 @@ class CameraProvider : public BnCameraProvider, protected camera_module_callback
     Mutex mCbLock;
     std::shared_ptr<ICameraProviderCallback> mCallbacks = nullptr;
 
-    sp<CameraModule> mModule;
+    std::shared_ptr<CameraModule> mModule;
 
     int mNumberOfLegacyCameras;
     std::map<std::string, camera_device_status_t> mCameraStatusMap;  // camera id -> status

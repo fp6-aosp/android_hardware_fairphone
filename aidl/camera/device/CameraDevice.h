@@ -35,7 +35,7 @@ class CameraDevice : public BnCameraDevice {
     // be multiple CameraDevice trying to access the same physical camera.  Also, provider will have
     // to keep track of all CameraDevice objects in order to notify CameraDevice when the underlying
     // camera is detached.
-    CameraDevice(sp<CameraModule> module, const std::string& cameraId,
+    CameraDevice(std::shared_ptr<CameraModule> module, const std::string& cameraId,
                  const SortedVector<std::pair<std::string, std::string>>& cameraDeviceNames);
     virtual ~CameraDevice();
 
