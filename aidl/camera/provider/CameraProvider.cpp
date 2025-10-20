@@ -231,6 +231,7 @@ int CameraProvider::checkCameraVersion(int id, camera_info info) {
                 // in support
                 break;
             case CAMERA_DEVICE_API_VERSION_3_6:
+            case CAMERA_DEVICE_API_VERSION_3_7:
                 /**
                  * ICameraDevice@3.5 contains APIs from both
                  * CAMERA_DEVICE_API_VERSION_3_6 and CAMERA_MODULE_API_VERSION_2_5
