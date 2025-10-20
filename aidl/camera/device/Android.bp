@@ -35,3 +35,9 @@ cc_library_shared {
     ],
     export_include_dirs: ["."],
 }
+
+cc_library_headers {
+    name: "camera.device-impl.fairphone_headers",
+    export_include_dirs: ["."],
+    vendor: true,
+}

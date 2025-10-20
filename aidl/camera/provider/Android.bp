@@ -17,7 +17,6 @@ cc_defaults {
         "android.hardware.camera.common-V1-ndk",
         "android.hardware.camera.device-V2-ndk",
         "android.hardware.camera.provider-V2-ndk",
-        "camera.device-impl.fairphone",
         "libbinder_ndk",
         "libcamera_metadata",
         "libcutils",
@@ -26,14 +25,20 @@ cc_defaults {
         "libhidlbase",
         "liblog",
         "libutils",
-    ],
+    ] + select(soong_config_variable("fairphone_camera", "custom_device_impl"), {
+        any @ flag_val: [flag_val],
+        default: ["camera.device-impl.fairphone"],
+    }),
     static_libs: [
         "android.hardware.camera.common-helper.fairphone",
         "libaidlcommonsupport",
     ],
     header_libs: [
         "libhardware_headers.camera3_fairphone",
-    ],
+    ] + select(soong_config_variable("fairphone_camera", "custom_device_impl"), {
+        any @ flag_val: ["camera.device-impl.fairphone_headers"],
+        default: [],
+    }),
 }
 
 cc_binary {
